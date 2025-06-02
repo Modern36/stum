@@ -1,7 +1,7 @@
 import pytest
 from jiwer import cer
 
-from video_to_srt import (
+from stum.video_to_srt import (
     filter_frame_groups,
     group_frames,
     intertitles_to_srt,

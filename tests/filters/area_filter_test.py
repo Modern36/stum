@@ -1,4 +1,4 @@
-from contours import contour_filter
+from stum.contours import contour_filter
 
 
 def test_contour_sign_finder(white_intertitles):

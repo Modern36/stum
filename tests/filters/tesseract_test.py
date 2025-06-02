@@ -3,7 +3,7 @@ import re
 import pytest
 from jiwer import cer
 
-from tesseract import extract_text
+from stum.tesseract import extract_text
 from tests.utils import (
     get_text_badsintertitles_pairs,
     get_text_intertitle_pairs,

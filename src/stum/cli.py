@@ -3,7 +3,7 @@ from pathlib import Path
 
 from tqdm import tqdm
 
-from video_to_srt import pipeline
+from stum.video_to_srt import pipeline
 
 
 def cli():

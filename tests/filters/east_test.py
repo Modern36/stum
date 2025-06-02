@@ -1,4 +1,4 @@
-from east import east_filter
+from stum.east import east_filter
 
 
 def test_east_sign_finder(white_intertitles):

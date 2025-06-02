@@ -1,4 +1,4 @@
-from tesseract import clean_text, count_special_chars
+from stum.tesseract import clean_text, count_special_chars
 
 
 class TestCountSpecialChars:

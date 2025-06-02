@@ -14,7 +14,7 @@ import re
 import cv2
 import pytesseract
 
-from east import east_filter
+from stum.east import east_filter
 
 specials = re.compile(r"[^a-zA-Z0-9 \nÅåÄäÖö\.áé,”]")
 onlyvowels = re.compile(r"[aouåeiyäöAOUÅEIYÄÖ]{2;}")

@@ -3,7 +3,7 @@ from pathlib import Path
 import cv2
 import pytest
 
-from video_to_srt import detect_scene_change
+from stum.video_to_srt import detect_scene_change
 
 test_data_root = Path(__file__).parent / "data"
 

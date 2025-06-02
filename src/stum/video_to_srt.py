@@ -10,8 +10,8 @@ from ffmpeg import FFmpeg
 from jiwer import cer
 from tqdm import tqdm
 
-from contours import contour_filter
-from tesseract import extract_text
+from stum.contours import contour_filter
+from stum.tesseract import extract_text
 
 Intertitle = namedtuple("Intertitle", ["idx", "start", "end", "text"])
 MSE_THRESHOLD = 10_000
