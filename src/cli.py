@@ -57,11 +57,11 @@ def cli():
     print(f"Found {len(inputs)} files to process")
 
     for input, output_file in tqdm(inputs, desc="Processing files"):
-        pipeline(args, input, output_file)
+        pipeline(args.debug, input, output_file)
 
 
-def pipeline(args, input, output_file):
-    if args.debug:
+def pipeline(debug, input, output_file):
+    if debug:
         processing_dir = input.with_suffix("")
         processing_dir.mkdir()
     else:
@@ -73,7 +73,7 @@ def pipeline(args, input, output_file):
         desc="Processing groups",
     )
 
-    filter_frame_groups(group_dirs, debug=args.debug)
+    filter_frame_groups(group_dirs, debug=debug)
     merge_sequences(processing_dir)
     intertitles = sequence_to_namedtuples(processing_dir)
     srt = intertitles_to_srt(intertitles)
