@@ -5,11 +5,11 @@ build-backend = "hatchling.build"
 
 [project]
 dependencies = [
-  "python-ffmpeg==2.0.12",
-  "pytesseract==0.3.13",
-  "opencv-contrib-python==4.10.0.84",
-  "jiwer==3.0.4",
-  "tqdm==4.67.1"
+  "python-ffmpeg>=2.0.12",
+  "pytesseract>=0.3.13",
+  "opencv-contrib-python>=4.11.0.86",
+  "jiwer>=3.1.0",
+  "tqdm>=4.67.1"
 ]
 dynamic = ["version"]
 readme = "README.md"
