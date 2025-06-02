@@ -173,7 +173,7 @@ def intertitle_to_srt(intertitle: Intertitle):
     result += " --> "
     result += frame_nr_to_timestamp(intertitle.end, fps=25)
     result += "\n"
-    result += f"{intertitle.text}"
+    result += f"{intertitle.text.replace('\n', '\t').strip()}"
     return result
 
 

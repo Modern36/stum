@@ -20,43 +20,19 @@ def target_srt1(system_os):
     if system_os.startswith("macOS"):
         return """0
 00:00:00,080 --> 00:00:00,560
-(stmsx FILMINDUSTRIS VECKOREVY 1930
-
-FÖRNÄMLIG VISIT.
-
-Londons Lordmayor med sin
-officiella uppvaktning landstiger
-i Göteborg.
+(stmsx FILMINDUSTRIS VECKOREVY 1930\t\tFÖRNÄMLIG VISIT.\t\tLondons Lordmayor med sin\tofficiella uppvaktning landstiger\ti Göteborg.
 
 1
 00:00:00,600 --> 00:00:00,720
-Göteborg, 1 sept. 1930.
-Londons Lordmayor
-Sir William Waterlow
-
-anländer till Göteborg med
-”Suecia” och mottages
-av landshövdingen."""
+Göteborg, 1 sept. 1930.\tLondons Lordmayor\tSir William Waterlow\t\tanländer till Göteborg med\t”Suecia” och mottages\tav landshövdingen.""".strip()
     elif system_os.startswith("Linux"):
         return """0
 00:00:00,080 --> 00:00:00,560
-é%svmsx FILMINDUSTRIS VECKOREVY 1930
-
-FÖRNÄMLIG VISIT.
-
-Londons Lordmayor med sin
-officiella uppvaktning landstiger
-i Göteborg.
+é%svmsx FILMINDUSTRIS VECKOREVY 1930\t\tFÖRNÄMLIG VISIT.\t\tLondons Lordmayor med sin\tofficiella uppvaktning landstiger\ti Göteborg.
 
 1
 00:00:00,600 --> 00:00:00,720
-Göteborg, 1 sept. 1930.
-Londons Lordmayor
-Sir William Waterlow\n
-anländer till Göteborg med
-”Suecia” och mottages
-av landshövdingen.
-
+Göteborg, 1 sept. 1930.\tLondons Lordmayor\tSir William Waterlow\t\tanländer till Göteborg med\t”Suecia” och mottages\tav landshövdingen.
 """.strip()
 
 
@@ -67,7 +43,6 @@ class TestVideoToFrames:
         assert 250 == len(list(frames1.glob("*.png")))
 
     def test_group_by_similarity(self, frames1):
-
         group_frames(frames1)
         assert 5 == len([d for d in frames1.iterdir() if d.is_dir()])
 
