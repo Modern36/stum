@@ -188,6 +188,32 @@ def intertitles_to_srt(intertitles: list[Intertitle]):
 
 
 def pipeline(input: Path, output_file: Path, debug: bool = False):
+    """Extracts intertitletexts from a video file and writes them to an SRT.
+
+    Parameters:
+    - input (Path): The path to the input video file.
+    - output_file (Path): The path where the generated SRT subtitle file will
+      be saved.
+    - debug (bool, optional): If True, the intermed`iate processing files are
+      not deleted and can be used for debugging. Default is False.
+
+    Process:
+    1. Extract frames from the input video.
+    2. Group frames into sequences of similar frames using Mean Squared Error
+       (MSE).
+    3. Filter frame groups to keep only those with valid intertitles based on
+       contour detection and text extraction.
+    4. Merge sequences that have similar intertitle texts.
+    5. Convert the remaining intertitles into namedtuples, representing each
+       intertitle by its index, start frame number, end frame number, and
+       extracted text.
+    6. Generate SRT subtitle format from the namedtuple list of intertitles.
+    7. Save the generated SRT content to the specified output file.
+
+    The resulting SRT file will have timestamps derived from frame numbers
+    using a fixed frames per second (FPS) rate.
+    """
+
     if debug:
         processing_dir = input.with_suffix("")
         processing_dir.mkdir()
