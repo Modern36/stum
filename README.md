@@ -1,7 +1,7 @@
 ![test-coverage](/media/coverage.svg)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![Hatch project](https://img.shields.io/badge/%F0%9F%A5%9A-Hatch-4051b5.svg)](https://github.com/pypa/hatch)
-
+[![Publish Python Package to PyPI](https://github.com/Modern36/stum/actions/workflows/hatch-publish-to-pypi.yml/badge.svg)](https://github.com/Modern36/stum/actions/workflows/hatch-publish-to-pypi.yml)
 
 
 # stum
