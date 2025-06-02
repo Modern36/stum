@@ -1,17 +1,9 @@
 from argparse import ArgumentParser
 from pathlib import Path
-from tempfile import mkdtemp
 
 from tqdm import tqdm
 
-from video_to_srt import (
-    filter_frame_groups,
-    group_frames,
-    intertitles_to_srt,
-    merge_sequences,
-    sequence_to_namedtuples,
-    video_to_frames,
-)
+from video_to_srt import pipeline
 
 
 def cli():
@@ -62,27 +54,6 @@ def cli():
             output_file,
             debug=args.debug,
         )
-
-
-def pipeline(input, output_file, debug=False):
-    if debug:
-        processing_dir = input.with_suffix("")
-        processing_dir.mkdir()
-    else:
-        processing_dir = Path(mkdtemp())
-    video_to_frames(input, processing_dir)
-    group_frames(processing_dir)
-    group_dirs = tqdm(
-        [dir for dir in processing_dir.iterdir() if dir.is_dir()],
-        desc="Processing groups",
-    )
-
-    filter_frame_groups(group_dirs, debug=debug)
-    merge_sequences(processing_dir)
-    intertitles = sequence_to_namedtuples(processing_dir)
-    srt = intertitles_to_srt(intertitles)
-
-    output_file.open("w", encoding="utf-8").write(srt)
 
 
 if __name__ == "__main__":

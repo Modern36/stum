@@ -1,12 +1,14 @@
 import zipfile
 from collections import namedtuple
 from pathlib import Path
+from tempfile import mkdtemp
 from typing import Iterable
 
 import cv2
 import numpy as np
 from ffmpeg import FFmpeg
 from jiwer import cer
+from tqdm import tqdm
 
 from contours import contour_filter
 from tesseract import extract_text
@@ -183,3 +185,24 @@ def intertitles_to_srt(intertitles: list[Intertitle]):
     return "\n\n".join(
         [intertitle_to_srt(intertitle) for intertitle in intertitles]
     )
+
+
+def pipeline(input, output_file, debug=False):
+    if debug:
+        processing_dir = input.with_suffix("")
+        processing_dir.mkdir()
+    else:
+        processing_dir = Path(mkdtemp())
+    video_to_frames(input, processing_dir)
+    group_frames(processing_dir)
+    group_dirs = tqdm(
+        [dir for dir in processing_dir.iterdir() if dir.is_dir()],
+        desc="Processing groups",
+    )
+
+    filter_frame_groups(group_dirs, debug=debug)
+    merge_sequences(processing_dir)
+    intertitles = sequence_to_namedtuples(processing_dir)
+    srt = intertitles_to_srt(intertitles)
+
+    output_file.open("w", encoding="utf-8").write(srt)
