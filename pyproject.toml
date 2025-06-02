@@ -1,0 +1,133 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+
+[project]
+dependencies = [
+  "python-ffmpeg==2.0.12",
+  "pytesseract==0.3.13",
+  "opencv-contrib-python==4.10.0.84",
+  "jiwer==3.0.4",
+  "tqdm==4.67.1"
+]
+dynamic = ["version"]
+readme = "README.md"
+name = "stum"
+description = "Tool for detecting and extracting text from intertitles in Swedish newsreels."
+keywords = [
+    "automatic speech recognition",
+    "intertitle",
+    "newsreels",
+    "speech-to-text",
+    "swedish",
+    "transcription",
+]
+requires-python = ">=3.10"
+authors = [
+  {name = "Mathias Johansson", email = "MathiasJoha@gmail.com"},
+]
+maintainers = [
+  {name = "Mathias Johansson", email = "MathiasJoha@gmail.com"},
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: Pytest",
+    "Intended Audience :: Science/Research",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Scientific/Engineering :: Image Processing",
+    "Topic :: Utilities",
+]
+license = {text = "CC-BY-NC-4.0"}
+
+
+[project.urls]
+"Homepage" = "https://github.com/Modern36/stum"
+"Bug Tracker" = "https://github.com/Modern36/stum/issues"
+
+[tool.hatch.version]
+source = "vcs"
+scheme = "standard"
+
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 79
+
+[tool.black]
+line-length = 79
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+force-exclude = '''
+/(
+    \.toml
+  | \.yaml
+)/
+'''
+
+
+[tool.pytest.ini_options]
+addopts = [
+  "--import-mode=importlib",
+  "--dist=loadfile",
+  "-n=4"
+    ]
+pythonpath = "src"
+testpaths = "tests"
+
+
+[project.optional-dependencies]
+dev = [
+  "pytest==8.2.0",
+  "pytest-cov==5.0.0",
+  "coverage==7.5.1",
+  "coverage-badge==1.1.2",
+  "pre-commit==4.1.0",
+  "pytest-xdist==3.6.1",
+]
+
+
+[project.scripts]
+stum = "stum.cli:cli"
+
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "LICENSE",
+    "README.md"
+]
+
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/stum"]
+
+
+[tool.hatch.envs.default]
+dependencies = [
+  "coverage-badge==1.1.2",
+  "hatch==1.14.1",
+  "pytest==8.3.5",
+  "pytest-cov==6.1.1",
+  "tox==4.26.0"
+]

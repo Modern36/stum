@@ -1,0 +1,134 @@
+# CONTRIBUTING
+
+Welcome to stum! We're excited that you're interested in contributing.
+These guidelines are designed to make the contribution process as
+straightforward as possible.
+
+We value contributions from everyone and follow a code review process for all
+changes. This means your pull requests will be reviewed by maintainers before
+being merged.
+
+## How to Contribute
+
+### Getting Started
+
+1.  **Fork the Repository**: If you don't have write access to the main
+    repository, start by forking it on GitHub. Click the "Fork" button at the
+    top right of the
+    [stum repository page](https://github.com/Modern36/stum).
+
+2.  **Clone Your Fork**: Clone your forked repository to your local machine.
+    Replace `your-username` with your actual GitHub username.
+    ```sh
+    git clone https://github.com/your-username/stum.git
+    cd stum
+    ```
+
+3.  **Set Up Your Development Environment**:
+    * **Python Version**: stum requires Python `>=3.10` as specified
+        in `pyproject.toml`. We recommend using a virtual environment (e.g.,
+        `venv`) to manage dependencies.
+        ```sh
+        python3.10 -m venv .venv
+        source .venv/bin/activate
+        ```
+    * **Install Dependencies**: Install the project dependencies, including the
+        optional dependencies needed for development.
+        ```sh
+        python -m pip install -e ".[dev]"
+        ```
+    * **Set up pre-commit hooks**: This project uses `pre-commit` to ensure
+        code style and quality before commits. The hooks are defined in
+        `.pre-commit-config.yaml` and use tools like `black` and `isort`
+        (configured in `pyproject.toml`).
+        ```sh
+        pre-commit install
+        ```
+        Now, `pre-commit` will run automatically on `git commit`. You can also
+        run it manually on all files:
+        ```sh
+        pre-commit run --all-files
+        ```
+
+### Making Changes
+
+1.  **Create a Branch**: Create a new branch for your feature or bug fix. Use a
+    descriptive name.
+    ```sh
+    git checkout -b my-awesome-feature
+    ```
+2.  **Write Failing Tests For Your Intended Change**: Run the test suite to
+    ensure your changes haven't introduced any regressions.
+    ```python
+    @pytest.mark.xfail(strict=True, reason="Red Phase:")
+    def test_my_feature():
+        assert feature_works
+    ```
+
+3.  **Commit Your Tests**: Commit your changes with a [clear and concise
+    commit message](https://git-scm.com/book/en/v2/Distributed-Git-Contributing-to-a-Project.html#_commit_guidelines).
+    ```sh
+    git add tests/new_feature_test.py
+    git commit -m "Red Phase: Test my awesome feature"
+    ```
+
+4.  **Write Your Code**: Make your changes to the codebase.
+    *   Write code that passes the test(s).
+    *   Commit with a clear and concise message
+
+
+5.  **Refactor Your Code**: Refactor your code to make it more readable and maintainable.
+    *   Make small stepwise changes to improve readability and maintainability
+    *   Commit each change with a clear and concise message
+    ```sh
+    git add src/
+    git commit -m "Refactor: Make my awesome feature more readable"
+    ```
+
+
+### Submitting Your Contribution
+
+
+1.  **Push to Your Fork**: Push your changes to your forked repository.
+    ```sh
+    git push origin my-awesome-feature
+    ```
+
+2.  **Open a Pull Request (PR)**: Go to the stum repository on GitHub and
+    click the "New pull request" button.
+    * Ensure the base repository is `Modern36/stum` and the base branch is
+        `main` (or the relevant development branch).
+    * Ensure the head repository is your fork and the compare branch is
+        `my-awesome-feature`.
+    * Provide a clear title and description for your PR. Explain the problem
+        you're solving and the changes you've made. Link to any relevant
+        issues.
+
+5.  **Code Review**: Maintainers will review your PR. They may ask for changes
+    or clarifications. Please respond to feedback promptly. Once your PR is
+    approved, a maintainer will merge it.
+
+## Reporting Bugs or Requesting Features
+
+If you find a bug or have an idea for a new feature, please check the issue
+tracker to see if it has already been reported. If not, feel free to open a new
+issue.
+
+When reporting a bug, please include:
+*   A clear and descriptive title.
+*   Steps to reproduce the bug.
+*   What you expected to happen.
+*   What actually happened.
+*   Your operating system, Python version, and stum version.
+
+## License
+
+By contributing to stum, you agree that your contributions will be
+licensed under the CC-BY-NC 4.0 License that covers the project.
+
+## Questions?
+
+If you have any questions, feel free to ask by opening an issue on the issue
+tracker.
+
+Thank you for contributing to stum!

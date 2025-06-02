@@ -1,0 +1,37 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+fail_fast: true
+repos:
+-   repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+    -   id: isort
+        name: isort (python)
+        args: ["--profile", "black"]
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-added-large-files
+        stages: [pre-push]
+-   repo: https://github.com/psf/black
+    rev: 22.10.0
+    hooks:
+    -   id: black
+-   repo: local
+    hooks:
+    -   id: coverage
+        always_run: true
+        name: coverage-check
+        entry: "pytest --cov=src --dist=loadfile -n=4"
+        language: system
+        pass_filenames: false
+        verbose: true
+    -   id: coverage-badge
+        always_run: true
+        name: coverage-badge
+        entry: "coverage-badge -fo media/coverage.svg"
+        language: system
+        pass_filenames: false
