@@ -57,10 +57,14 @@ def cli():
     print(f"Found {len(inputs)} files to process")
 
     for input, output_file in tqdm(inputs, desc="Processing files"):
-        pipeline(args.debug, input, output_file)
+        pipeline(
+            input,
+            output_file,
+            debug=args.debug,
+        )
 
 
-def pipeline(debug, input, output_file):
+def pipeline(input, output_file, debug=False):
     if debug:
         processing_dir = input.with_suffix("")
         processing_dir.mkdir()
