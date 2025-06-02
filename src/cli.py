@@ -49,33 +49,36 @@ def cli():
             in_file,
         ]
 
+    inputs = [(input, input.with_suffix(".srt")) for input in inputs]
+
     if args.skip:
-        inputs = [
-            input for input in inputs if not input.with_suffix(".srt").exists()
-        ]
+        inputs = [input for input in inputs if not input[1].exists()]
 
     print(f"Found {len(inputs)} files to process")
 
-    for input in tqdm(inputs, desc="Processing files"):
-        output_file = input.with_suffix(".srt")
-        if args.debug:
-            processing_dir = input.with_suffix("")
-            processing_dir.mkdir()
-        else:
-            processing_dir = Path(mkdtemp())
-        video_to_frames(input, processing_dir)
-        group_frames(processing_dir)
-        group_dirs = tqdm(
-            [dir for dir in processing_dir.iterdir() if dir.is_dir()],
-            desc="Processing groups",
-        )
+    for input, output_file in tqdm(inputs, desc="Processing files"):
+        pipeline(args, input, output_file)
 
-        filter_frame_groups(group_dirs, debug=args.debug)
-        merge_sequences(processing_dir)
-        intertitles = sequence_to_namedtuples(processing_dir)
-        srt = intertitles_to_srt(intertitles)
 
-        output_file.open("w", encoding="utf-8").write(srt)
+def pipeline(args, input, output_file):
+    if args.debug:
+        processing_dir = input.with_suffix("")
+        processing_dir.mkdir()
+    else:
+        processing_dir = Path(mkdtemp())
+    video_to_frames(input, processing_dir)
+    group_frames(processing_dir)
+    group_dirs = tqdm(
+        [dir for dir in processing_dir.iterdir() if dir.is_dir()],
+        desc="Processing groups",
+    )
+
+    filter_frame_groups(group_dirs, debug=args.debug)
+    merge_sequences(processing_dir)
+    intertitles = sequence_to_namedtuples(processing_dir)
+    srt = intertitles_to_srt(intertitles)
+
+    output_file.open("w", encoding="utf-8").write(srt)
 
 
 if __name__ == "__main__":
