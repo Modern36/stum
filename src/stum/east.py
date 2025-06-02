@@ -3,7 +3,7 @@ from pathlib import Path
 import cv2
 
 model_loc = (
-    Path(__file__).parents[1] / "models" / "frozen_east_text_detection.pb"
+    Path(__file__).parents[2] / "models" / "frozen_east_text_detection.pb"
 )
 
 east_net = cv2.dnn.readNet(model_loc)
