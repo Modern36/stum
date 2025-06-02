@@ -57,6 +57,7 @@ def cli():
     print(f"Found {len(inputs)} files to process")
 
     for input in tqdm(inputs, desc="Processing files"):
+        output_file = input.with_suffix(".srt")
         if args.debug:
             processing_dir = input.with_suffix("")
             processing_dir.mkdir()
@@ -74,7 +75,7 @@ def cli():
         intertitles = sequence_to_namedtuples(processing_dir)
         srt = intertitles_to_srt(intertitles)
 
-        input.with_suffix(".srt").open("w", encoding="utf-8").write(srt)
+        output_file.open("w", encoding="utf-8").write(srt)
 
 
 if __name__ == "__main__":
