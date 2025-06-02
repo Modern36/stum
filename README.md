@@ -2,6 +2,7 @@
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![Hatch project](https://img.shields.io/badge/%F0%9F%A5%9A-Hatch-4051b5.svg)](https://github.com/pypa/hatch)
 [![Publish Python Package to PyPI](https://github.com/Modern36/stum/actions/workflows/hatch-publish-to-pypi.yml/badge.svg)](https://github.com/Modern36/stum/actions/workflows/hatch-publish-to-pypi.yml)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15576415.svg)](https://doi.org/10.5281/zenodo.15576415)
 
 
 # stum
