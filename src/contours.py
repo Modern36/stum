@@ -1,8 +1,4 @@
-from pathlib import Path
-
 import cv2
-
-from east import east_filter
 
 
 def largest_contour(binary_image: cv2.typing.MatLike):
@@ -42,7 +38,6 @@ def contour_filter(image: cv2.typing.MatLike, threshold=0.9) -> bool:
     relative_area = largest_contour(binary)
 
     if (1 - relative_area) > threshold:
-
         inverted = cv2.bitwise_not(binary)
 
         inverteds_largest_area = largest_contour(inverted)
