@@ -187,7 +187,7 @@ def intertitles_to_srt(intertitles: list[Intertitle]):
     )
 
 
-def pipeline(input, output_file, debug=False):
+def pipeline(input: Path, output_file: Path, debug: bool = False):
     if debug:
         processing_dir = input.with_suffix("")
         processing_dir.mkdir()
