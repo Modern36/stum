@@ -1,15 +1,17 @@
 import zipfile
 from collections import namedtuple
 from pathlib import Path
+from tempfile import mkdtemp
 from typing import Iterable
 
 import cv2
 import numpy as np
 from ffmpeg import FFmpeg
 from jiwer import cer
+from tqdm import tqdm
 
-from contours import contour_filter
-from tesseract import extract_text
+from stum.contours import contour_filter
+from stum.tesseract import extract_text
 
 Intertitle = namedtuple("Intertitle", ["idx", "start", "end", "text"])
 MSE_THRESHOLD = 10_000
@@ -171,7 +173,7 @@ def intertitle_to_srt(intertitle: Intertitle):
     result += " --> "
     result += frame_nr_to_timestamp(intertitle.end, fps=25)
     result += "\n"
-    result += f"{intertitle.text}"
+    result += f"{intertitle.text.replace('\n', '\t').strip()}"
     return result
 
 
@@ -183,3 +185,50 @@ def intertitles_to_srt(intertitles: list[Intertitle]):
     return "\n\n".join(
         [intertitle_to_srt(intertitle) for intertitle in intertitles]
     )
+
+
+def pipeline(input: Path, output_file: Path, debug: bool = False):
+    """Extracts intertitletexts from a video file and writes them to an SRT.
+
+    Parameters:
+    - input (Path): The path to the input video file.
+    - output_file (Path): The path where the generated SRT subtitle file will
+      be saved.
+    - debug (bool, optional): If True, the intermed`iate processing files are
+      not deleted and can be used for debugging. Default is False.
+
+    Process:
+    1. Extract frames from the input video.
+    2. Group frames into sequences of similar frames using Mean Squared Error
+       (MSE).
+    3. Filter frame groups to keep only those with valid intertitles based on
+       contour detection and text extraction.
+    4. Merge sequences that have similar intertitle texts.
+    5. Convert the remaining intertitles into namedtuples, representing each
+       intertitle by its index, start frame number, end frame number, and
+       extracted text.
+    6. Generate SRT subtitle format from the namedtuple list of intertitles.
+    7. Save the generated SRT content to the specified output file.
+
+    The resulting SRT file will have timestamps derived from frame numbers
+    using a fixed frames per second (FPS) rate.
+    """
+
+    if debug:
+        processing_dir = input.with_suffix("")
+        processing_dir.mkdir()
+    else:
+        processing_dir = Path(mkdtemp())
+    video_to_frames(input, processing_dir)
+    group_frames(processing_dir)
+    group_dirs = tqdm(
+        [dir for dir in processing_dir.iterdir() if dir.is_dir()],
+        desc="Processing groups",
+    )
+
+    filter_frame_groups(group_dirs, debug=debug)
+    merge_sequences(processing_dir)
+    intertitles = sequence_to_namedtuples(processing_dir)
+    srt = intertitles_to_srt(intertitles)
+
+    output_file.open("w", encoding="utf-8").write(srt)

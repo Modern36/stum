@@ -1,5 +1,5 @@
-from contours import contour_filter
-from east import east_filter
+from stum.contours import contour_filter
+from stum.east import east_filter
 
 
 def test_contour_white_finder(white_intertitles):

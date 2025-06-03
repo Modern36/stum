@@ -113,7 +113,7 @@ stum = "stum.cli:cli"
 
 [tool.hatch.build.targets.sdist]
 include = [
-    "/src",
+    "/src/stum",
     "LICENSE",
     "README.md"
 ]
